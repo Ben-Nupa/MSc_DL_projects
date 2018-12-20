@@ -156,52 +156,6 @@ def generate_test_set_regression():
     return [X_test, Y_test]
 
 
-def generate_dataset_denoising(nb_samples, free_location=False):
-    # Getting im_size:
-    im_size = generate_a_rectangle().shape[0]
-    X = np.zeros([nb_samples, im_size])
-    X_noisy = np.zeros([nb_samples, im_size])
-    noise = []
-    print('Creating data:')
-    for i in range(nb_samples):
-        if i % 100 == 0:
-            print(i)
-        category = np.random.randint(3)
-        noise.append(100 * np.random.random())
-        if category == 0:
-            X[i], X_noisy[i] = generate_a_rectangle(noise[-1], free_location, return_both=True)
-        elif category == 1:
-            X[i], X_noisy[i] = generate_a_disk(noise[-1], free_location, return_both=True)
-        else:
-            X[i], X_noisy[i], _ = generate_a_triangle(noise[-1], free_location, return_both=True)
-    X = X / 255
-    X_noisy = (X_noisy + np.min(noise)) / (255 + np.max(noise) + np.min(noise))
-    return X.reshape(-1, IMAGE_SIZE, IMAGE_SIZE, 1), X_noisy.reshape(-1, IMAGE_SIZE, IMAGE_SIZE, 1)
-
-
-def generate_test_set_denoising():
-    return generate_dataset_denoising(300, False)
-
-
-def visualize_denoising(x_noisy, x_real, x_reconstruced=None):
-    plt.figure(figsize=(15, 15))
-
-    plt.subplot(1, 3, 1)
-    plt.title("Real drawing")
-    plt.imshow(x_real.reshape((IMAGE_SIZE, IMAGE_SIZE)), cmap='gray')
-
-    plt.subplot(1, 3, 2)
-    plt.title("Noisy drawing")
-    plt.imshow(x_noisy.reshape((IMAGE_SIZE, IMAGE_SIZE)), cmap='gray')
-
-    if x_reconstruced is not None:
-        plt.subplot(1, 3, 3)
-        plt.title("Reconstructed drawing")
-        plt.imshow(x_reconstruced.reshape((IMAGE_SIZE, IMAGE_SIZE)), cmap='gray')
-
-    plt.show()
-
-
 if __name__ == '__main__':
     IMAGE_SIZE = 100
 
