@@ -14,3 +14,7 @@ venv/
 
 # Jupyter Notebook
 .ipynb_checkpoints/
+
+# Other
+test.py
+glove.6B/
