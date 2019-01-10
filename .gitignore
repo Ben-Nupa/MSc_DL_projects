@@ -15,6 +15,14 @@ venv/
 # Jupyter Notebook
 .ipynb_checkpoints/
 
+# Tensorboard
+launch_tensorboard.bat
+training_logs/
+
+# Training and output
+data/
+results/
+glove.6B/
+
 # Other
 test.py
-glove.6B/
